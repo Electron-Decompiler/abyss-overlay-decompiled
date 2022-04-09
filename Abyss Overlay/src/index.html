@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Abyss Overlay</title>
+    <script src="../src/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
+    <style>
+        @font-face{
+            font-family: "Minecraftia";
+            src: url("../assets/Minecraftia.ttf");
+        }
+        @font-face{
+            font-family: "abnes";
+            src: url("../assets/abnes.ttf");
+        }
+        html, body{
+            margin: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            user-select: none;
+            height: 100%;
+            border-radius: 20px;
+        }
+        #base{
+            margin: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            user-select: none;
+            height: 100%;
+            --primaryColor: rgb(188, 44, 255);
+        }
+        body::-webkit-scrollbar{
+            display: none;
+        }
+        ::-webkit-scrollbar{
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track{
+            background: none;
+        }
+        ::-webkit-scrollbar-thumb{
+            background: rgb(94, 94, 94);
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover{
+            background: #555;
+        }
+        p{
+            font-size: "100px";
+            color: white;
+            font-family: "Minecraftia";
+        }
+        div{
+            margin: 0;
+        }
+        .menu{
+            background: rgba(2, 2, 2, 0.199);
+            -webkit-app-region: drag;
+            height: 35px;
+            width: 100%;
+        }
+        .menuitem{
+            display: inline-block;
+            height: inherit;
+            margin: 0;
+            -webkit-transition: background-image 0.1s ease-in-out;
+            transition: background-image 0.1s ease-in-out;
+        }
+        h1{
+            background: -webkit-linear-gradient(rgb(153, 0, 255), rgb(212, 0, 255));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: "abnes";
+            font-size: 30px;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+            width: 200px;
+            text-align: center;
+            line-height: 42px;
+            vertical-align: top;
+        }
+        #discord{
+            background: transparent;
+            background-image: url("../assets/disc1.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #discord:hover{
+            background-image: url("../assets/disc2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        #info{
+            background: transparent;
+            background-image: url("../assets/info1.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            display: none;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #info:hover{
+            background-image: url("../assets/info2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        #session{
+            background: transparent;
+            background-image: url("../assets/session1.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            display: none;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #session:hover{
+            background-image: url("../assets/session2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        #music{
+            background: transparent;
+            background-image: url("../assets/music1.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            display: none;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #music:hover{
+            background-image: url("../assets/music2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        #settings{
+            background: transparent;
+            background-image: url("../assets/settings1.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            display: none;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #settings:hover{
+            background-image: url("../assets/settings2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        #update{
+            background: transparent;
+            background-image: url("../assets/update1.png");
+            background-size: cover;
+            height: 32px;
+            width: 32px;
+            position: relative;
+            top: -2.5px;
+            display: none;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #update:hover{
+            background-image: url("../assets/update2.png");
+            background-size: cover;
+            height: 32px;
+            width: 32px;
+            cursor: pointer;
+        }
+        #quit{
+            background: transparent;
+            background-image: url("../assets/quit1.png");
+            background-size: cover;
+            float: right;
+            height: 25px;
+            width: 25px;
+            margin: 5px;
+            margin-left: 0;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #quit:hover{
+            background-image: url("../assets/quit2.png");
+            background-size: cover;
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+        #minimize{
+            background: transparent;
+            background-image: url("../assets/min1.png");
+            background-size: cover;
+            float: right;
+            height: 25px;
+            width: 25px;
+            margin: 5px;
+            margin-right: 0;
+            margin-left: 0;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #minimize:hover{
+            background-image: url("../assets/min2.png");
+            background-size: cover;
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+        #show{
+            background: transparent;
+            background-image: url("../assets/show1.png");
+            background-size: cover;
+            float: right;
+            display: none;
+            height: 25px;
+            width: 25px;
+            margin: 5px;
+            margin-right: 0;
+            border: none;
+            outline: none;
+            transform: rotate(0deg);
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+            transition: transform 0.1s ease-in-out;
+        }
+        #show:hover{
+            background-image: url("../assets/show2.png");
+            background-size: cover;
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+        #pp{/*REMOVE*/
+            background: transparent;
+            background-image: url("../assets/show2.png");
+            background-size: cover;
+            float: right;
+            height: 25px;
+            width: 25px;
+            margin: 5px;
+            margin-right: 0;
+            border: none;
+            outline: none;
+            transform: rotate(0deg);
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #ppp{/*REMOVE*/
+            background: transparent;
+            background-image: url("../assets/show1.png");
+            background-size: cover;
+            float: right;
+            height: 25px;
+            width: 25px;
+            margin: 5px;
+            margin-right: 0;
+            border: none;
+            outline: none;
+            transform: rotate(0deg);
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+            -webkit-app-region: no-drag;
+        }
+        #titles{
+            /* background-color: rgba(255, 0, 0, 0.644); */
+            margin: 0;
+            padding: 0;
+            height: 28px;
+            width: inherit;
+            overflow: hidden;
+            display: none;
+        }
+        .titleitems{
+            color: var(--primaryColor);
+            display: inline-block;
+            font-family: "Minecraftia";
+            font-size: 18px;
+            height: 28px;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            line-height: block;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+            /* background: blue; */
+        }
+        #indexdiv{
+            margin: 0;
+            padding: 0;
+            height: calc(100% - 63px);
+            width: inherit;
+            overflow-y: overlay;
+            display: none;
+        }
+        .indexes{
+            display: inline-block;
+            font-family: "Minecraftia";
+            font-size: 15px;
+            vertical-align: top;
+            margin: 0;
+            margin-top: 5px;
+            padding: 0;
+            min-height: inherit;
+            overflow: hidden;
+            list-style-type: none;
+            text-align: center;
+            color: #AAAAAA;
+            white-space: nowrap;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+            /* background: red; */
+        }
+        li{
+            margin-bottom: 5px;
+            height: 23.0044px;
+        }
+        .tagli{
+            position: relative;
+            overflow: visible;
+            top: -5px;
+            font-family: Arial;
+            font-size: 25px;
+        }
+        .startup{
+            background: -webkit-linear-gradient(rgb(237, 146, 255), rgb(255, 255, 255));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: white;
+            font-family: "Minecraftia";
+            font-size: 22px;
+            height: 28px;
+            width: 100%;
+            margin: 5px;
+            padding: 0;
+            overflow: hidden;
+            text-align: center;
+            line-height: block;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+        }
+        .clientbutton{
+            display: inline-block;
+            font-family: "Minecraftia";
+            width: 30%;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin: 1%;
+            margin-top: 15px;
+            height: 55px;
+            text-align: center;
+            border: none;
+            background-size: 300% 100%;
+            border-radius: 50px;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+        .clientbutton:hover:not(.updatenotif){
+            background-position: 100% 0;
+            cursor: pointer;
+            transform: scale(1.1) perspective(1px);
+            z-index: -1;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+        .clientbutton:focus{
+            outline: none;
+        }
+        .clientbutton#badlion{
+            background-image: linear-gradient(to right, #2caddc, #feb730, #feb730, #2caddc);
+            box-shadow: 0 4px 15px 0 #2caddc;
+        }
+        .clientbutton#lunar{
+            background-image: linear-gradient(to right, #1d6cff, #c324ff, #c324ff, #1d6cff);
+            box-shadow: 0 4px 15px 0 #c324ff;
+        }
+        .clientbutton#vanilla{
+            background-image: linear-gradient(to right, rgb(114,177,71), rgb(79,54,36), rgb(79,54,36), rgb(114,177,71));
+            box-shadow: 0 4px 15px 0 rgb(114,177,71);
+        }
+        .clientbutton#pvplounge{
+            background-image: linear-gradient(to right, rgb(39,163,255), #294a7b, #294a7b, rgb(39,163,255));
+            box-shadow: 0 4px 15px 0 rgb(39,163,255);
+        }
+        .clientbutton#labymod{
+            background-image: linear-gradient(to right, rgb(14,146,236), rgb(56,182,250), rgb(56,182,250), rgb(14,146,236));
+            box-shadow: 0 4px 15px 0 rgb(56,182,250);
+        }
+
+        #clientimg{
+            height: 26.5px;
+            margin-top: 0;
+            padding: 0;
+            margin-right: 10px;
+            position: relative;
+            top: -4.5px;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+        }
+        #settingsdiv, #infodiv, #sessiondiv, #musicdiv{
+            display: none;
+            margin: 0;
+            padding: 0;
+            height: calc(100% - 35px);
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        .infopage{
+            display: inline-block;
+            font-family: "Minecraftia";
+            font-size: 18px;
+            margin: 0px;
+            margin-top: 5px;
+            text-align: center;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+        }
+        .settingspage{
+            display: inline-block;
+            font-family: "Minecraftia";
+            font-size: 18px;
+            margin: 0px;
+            margin-top: 5px;
+            text-align: center;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+            position: relative;
+            z-index: 0;
+        }
+        .sessionpage{
+            display: inline-block;
+            font-family: "Minecraftia";
+            font-size: 18px;
+            margin: 0px;
+            margin-top: 5px;
+            text-align: center;
+            filter: drop-shadow(2px 2px rgb(0, 0, 0));
+            position: relative;
+        }
+        .greengradient{
+            background: -webkit-linear-gradient(rgb(0, 180, 96), rgb(255, 255, 255));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .redgradient{
+            background: -webkit-linear-gradient(rgb(180, 0, 0), rgb(255, 255, 255));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .yellowgradient{
+            background: -webkit-linear-gradient(rgb(179, 131, 0), rgb(255, 255, 255));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .revert{
+            background: transparent;
+            background-image: url("../assets/revert1.png");
+            background-size: cover;
+            display: inline-block;
+            height: 35px;
+            width: 35px;
+            margin: 15px;
+            margin-left: 10px;
+            vertical-align: top;
+            border: none;
+            outline: none;
+        }
+        .revert:hover{
+            background-image: url("../assets/revert2.png");
+            background-size: cover;
+            height: 35px;
+            width: 35px;
+            cursor: pointer;
+        }
+        .rainbow{
+            animation: rainbow 5s infinite;
+        }
+        @keyframes rainbow{
+            0%{color: orange;}
+            10%{color: purple;}
+            20%{color: red;}
+            30%{color: CadetBlue;}
+            40%{color: yellow;}
+            50%{color: coral;}
+            60%{color: green;}
+            70%{color: cyan;}
+            80%{color: DeepPink;}
+            90%{color: DodgerBlue;}
+            100%{color: orange;}
+        }
+        /*swtich*/
+        .switch{
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        .switch input{ 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider{
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: transform .4s;
+        }
+        .slider:before{
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 7.5px;
+            bottom: 3px;
+            background-color: white;
+            transition: transform .4s;
+        }
+        input:checked + .slider{
+            background-color: var(--primaryColor);
+        }
+        input:focus + .slider{
+            box-shadow: 0 0 1px var(--primaryColor);
+        }
+        input:checked + .slider:before{
+            transform: translateX(23px);
+        }
+        /* Rounded sliders */
+        .slider.round{
+            border-radius: 34px;
+        }
+        .slider.round:before{
+            border-radius: 50%;
+        }
+        .custom-select-wrapper{
+            position: absolute;
+            user-select: none;
+            width: 30%;
+            margin-left: 10px;
+            z-index: 1;
+        }
+        .custom-select{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-width: 0 2px 0 2px;
+            border-style: solid;
+            border-color: #394a6d;
+        }
+        .custom-select_trigger{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 22px;
+            font-size: 20px;
+            font-weight: 300;
+            color: #ffffff;
+            height: 30px;
+            line-height: 30px;
+            background: rgba(82, 82, 82, 0.582);
+            cursor: pointer;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #b9b9b9;
+        }
+        .custom-select_trigger:hover{
+            background: rgba(136, 136, 136, 0.74);
+        }
+        .custom-options{
+            position: absolute;
+            display: block;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 2px solid #b9b9b9;
+            border-top: 0;
+            background: rgb(134, 134, 134);
+            transition: all 0.5s;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .custom-select.open .custom-options{
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+        .custom-option{
+            position: relative;
+            display: block;
+            padding: 0 22px 0 22px;
+            font-size: 20px;
+            font-weight: 300;
+            color: #3b3b3b;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+        .custom-option:hover{
+            cursor: pointer;
+            background-color: #b2b2b2;
+        }
+        .custom-option.selected{
+            color: #ffffff;
+            background-color: var(--primaryColor);
+        }
+        .arrow{
+            position: relative;
+            height: 15px;
+            width: 15px;
+            left: 20px;
+        }
+        .arrow::before, .arrow::after{
+            content: "";
+            position: absolute;
+            bottom: 0px;
+            width: 0.15rem;
+            height: 100%;
+            transition: all 0.5s;
+        }
+        .arrow::before{
+            left: -5px;
+            transform: rotate(45deg);
+            background-color: #d6d6d6;
+        }
+        .arrow::after{
+            left: 5px;
+            transform: rotate(-45deg);
+            background-color: #d6d6d6;
+        }
+        .open .arrow::before{
+            left: -5px;
+            transform: rotate(-45deg);
+        }
+        .open .arrow::after{
+            left: 5px;
+            transform: rotate(45deg);
+        }
+        
+        #startmusic{
+            min-width: 300px;
+            min-height: 60px;
+            font-size: 19px;
+            font-family: "Minecraftia";
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            font-weight: 700;
+            color: #ffffff;
+            background: #ae06d8;
+            background: linear-gradient(90deg, rgb(185, 70, 214) 0%, rgb(174, 0, 255) 100%);
+            border: none;
+            border-radius: 1000px;
+            box-shadow: 12px 12px 24px rgba(190, 24, 190, 0.64);
+            transition: all 0.3s ease-in-out 0s;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            padding: 10px;
+        }
+        #startmusic::before{
+            content: '';
+            border-radius: 1000px;
+            min-width: calc(300px + 12px);
+            min-height: calc(60px + 12px);
+            border: 6px solid #cc00ff;
+            box-shadow: 0 0 60px rgba(255, 0, 242, 0.64);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all .3s ease-in-out 0s;
+        }
+        #startmusic:hover, #startmusic:focus{
+            color: #313133;
+            transform: translateY(-6px);
+        }
+
+        #startmusic:hover::before, #startmusic:focus::before{
+            opacity: 1;
+        }
+        #startmusic::after {
+            content: '';
+            width: 30px; height: 30px;
+            border-radius: 100%;
+            border: 6px solid #ff00ea;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ring 1.5s infinite;
+            position: absolute;
+        }
+        #startmusic:hover::after, #startmusic:focus::after{
+            animation: none;
+            display: none;
+        }
+        @keyframes ring{
+            0%{
+                width: 30px;
+                height: 30px;
+                opacity: 1;
+            }
+            100%{
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+        #endmusic{
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            text-align: center;
+            font-family: Minecraftia;
+            color: rgb(175, 175, 175);
+            font-size: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 2px solid #d10e00;
+            background-color: transparent;
+            transition-duration: 0.5s;
+        }
+        #endmusic:hover{
+            cursor: pointer;
+            background-color: #d10e00;
+            color: black;
+        }
+        #musicvisualizer{
+            display: none;
+            float: right;
+            height: 32px;
+            width: 32px;
+            position: relative;
+            border: none;
+            outline: none;
+            filter: drop-shadow(1px 1px rgb(0, 0, 0));
+        }
+        .musicplaying{
+            display: none;
+        }
+        .musicbutton{
+            background: transparent;
+            background-size: cover;
+            height: 40px;
+            width: 40px;
+            margin: 5px;
+            border: none;
+            outline: none;
+        }
+        .musicbutton:hover{
+            filter: brightness(70%);
+            -webkit-filter: brightness(70%);
+        }
+        .musicbutton:active{
+            transform: scale(0.8, 0.8);
+        }
+        .songtimer{
+            display: inline-block;
+            width: 5%;
+            height: 10px;
+            margin: 0;
+            color: rgb(168, 168, 168);
+            font-size: 13px;
+            letter-spacing: 0.75px;
+        }
+        #musicprogress{
+            height: inherit;
+            width: 0%;
+            background-color: var(--primaryColor);
+            border-radius: 10px;
+        }
+        #queuediv li{
+            height: 20px;
+            width: 96%;
+            margin: 0 0 10px 0;
+            padding: 0 0 0 2px;
+        }
+        #queuediv li *{
+            display: inline-block;
+            margin: 0;
+            overflow: hidden;
+            font-size: 14px;
+        }
+        #queuediv li *:first-child{
+            color: gray;
+            width: 32px;
+            height: 20px;
+            margin-right: 5px;
+            text-align: center;
+        }
+        #queuediv li *:nth-child(2){
+            color: var(--primaryColor);
+            width: 308px;
+            height: 20px;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+        #queuediv li *:nth-child(3){
+            color: gray;
+            width: 47px;
+            height: 20px;
+            text-align: right;
+            direction: rtl;
+        }
+
+        #changelog{
+            display: none;
+            position: absolute;
+            width: 75%;
+            height: 75%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: auto;
+            padding: 2px;
+            box-sizing: border-box;
+            background-color: #3b3b3b;
+            border-radius: 10px;
+            box-shadow: 0 0 15px 8px black;
+            font-family: Minecraftia;
+            text-shadow: 2px 2px black;
+        }
+        #changelogClose{
+            position: absolute;
+            margin: 0;
+            top: -10px;
+            right: 0;
+            padding: 0;
+            height: 37px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 60px;
+            line-height: 60px;
+            color: red;
+            text-shadow: none;
+            transition: text-shadow 0.2s ease-in-out;
+        }
+        #changelogClose:hover{
+            cursor: pointer;
+            text-shadow: 2px 2px black;
+        }
+        /* #queuediv li *:nth-child(4){
+            display: block;
+            color: gray;
+            width: 350px;
+            height: 20px;
+            margin-left: 37px;
+        }*/
+    </style>
+    <!--<style>
+        body {
+          background-image: url('../assets/background.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+    </style>-->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+</head>
+<body>
+    <div id="base">
+        <div class="menu">
+            <h1 class="menuitem">ABYSS</h1>
+            <!--add tooltips for buttons-->
+            <img src="" id="clientimg">
+            <button name="Discord Server" class="menuitem tabsbuttons" id="discord"></button>
+            <button name="Information" class="menuitem tabsbuttons" id="info" style="width: 31px;"></button>
+            <button name="Session" class="menuitem tabsbuttons" id="session" style="width: 31px;"></button>
+            <button name="Music" class="menuitem tabsbuttons" id="music" style="width: 31px;"></button>
+            <button name="Settings" class="menuitem tabsbuttons" id="settings"></button>
+            <button name="Update" class="menuitem" id="update"></button>
+            <button name="Quit" class="menuitem" id="quit"></button>
+            <button name="Minimize" class="menuitem" id="minimize"></button>
+            <button name="Show" class="menuitem" id="show"></button>
+            <img id="musicvisualizer" src="../assets/musicvisualizer.gif">
+            <!-- <button name="pp" class="menuitem" id="pp"></button> -->
+            <!-- <button name="ppp" class="menuitem" id="ppp"></button> -->
+        </div>
+
+        <div id="settingsdiv">
+            <div class="settingspage" style="width: 100%; text-align: left; margin-bottom: 15px; z-index: 2;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Stats gamemode:</p>
+                <div class="custom-select-wrapper settingspage" id="gamemodebtn" style="filter: none;">
+                    <div class="custom-select">
+                        <div class="custom-select_trigger"><span style="text-align: center; width: 85%;">Select</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
+                            <span class="custom-option" id="bw">Bedwars</span>
+                            <span class="custom-option" id="sw">Skywars</span>
+                            <span class="custom-option" id="duels">Duels</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left; margin-bottom: 15px; z-index: 1;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Bedwars stats gamemode:</p>
+                <div class="custom-select-wrapper settingspage" id="gmbtn" style="filter: none;">
+                    <div class="custom-select">
+                        <div class="custom-select_trigger"><span style="text-align: center; width: 85%;">Select</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
+                            <span class="custom-option" id="overall">Overall</span>
+                            <span class="custom-option" id="solos">Solos</span>
+                            <span class="custom-option" id="doubles">Doubles</span>
+                            <span class="custom-option" id="threes">Threes</span>
+                            <span class="custom-option" id="fours">Fours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Game start notifs:</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="notifsbtn" checked>
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Auto shrink/unshrink:</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="shrinkbtn" checked>
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Show guild tags (a little slower):</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="gtagbtn" checked>
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Players that say your IGN/send p and f reqs:</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="callbtn" checked>
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Discord Rich Presence (start overlay before MC):</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="rpcbtn" checked>
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left; margin-bottom: 15px; z-index: 1;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">&nbsp ➤Discord Rich Presence stats:</p>
+                <div class="custom-select-wrapper settingspage" id="rpcStats" style="filter: none; width: 40%;">
+                    <div class="custom-select">
+                        <div class="custom-select_trigger"><span style="text-align: center; width: 85%;">Select</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options">
+                            <span class="custom-option" id="rpcSession">Session Stats</span>
+                            <span class="custom-option" id="rpcOverall">Overall Stats</span>
+                            <span class="custom-option" id="rpcNo">Hide Stats</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Change client (will restart overlay):</p>
+                <div class="custom-select-wrapper settingspage" id="changeclient" style="filter: none;">
+                    <div class="custom-select" style="width: 250px;">
+                        <div class="custom-select_trigger" style="text-align: center;">&nbspChange client</div>
+                    </div>
+                </div>
+            </div>
+            <div class="settingspage" style="width: 100%; text-align: left; margin-top: 20px;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Custom latest.log path (will restart overlay):</p>
+                <div class="custom-select-wrapper settingspage" id="changelogpath" style="filter: none;">
+                    <div class="custom-select" style="width: 230px;">
+                        <div class="custom-select_trigger" style="text-align: center;">Select log file</div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="settingspage" style="width: 100%; text-align: left;">
+                <p class="settingspage" style="margin-left: 2px; color: var(--primaryColor); filter: none;">➤Autowho [BETA] (BANNABLE: USE AT YOUR OWN RISK):</p>
+                <label class="switch settingspage" style="margin: 10px; filter: none;">
+                    <input class="settingspage" type="checkbox" id="whobtn">
+                    <span class="slider round settingspage" style="margin: 0px; filter: none;"></span>
+                </label>
+            </div> -->
+            <p class="settingspage" style="vertical-align: top; margin-left: 2px; margin-top: 15px; color: var(--primaryColor);">➤Color/Opacity:</p>
+            <div class="settingspage" style="overflow: visible; margin-top: 8px; margin-left: 15px; height: 35px; width: 30px; z-index: 1;"><div id="color-picker"></div></div>
+            <button name="Revert" class="revert settingspage" id="revertcolor"></button>
+        </div>
+
+        <div id="infodiv">
+            <p class="infopage" style="width: 100%; margin-left: 2px; text-align: left; color: var(--primaryColor);">➤Stats Coloring Key:</p>
+            <div class="infopage" style="background: #AAAAAA; color: #555555; width: 16%; margin-left: 5px;">BAD</div>
+            <div class="infopage" style="background: #FFFFFF; color: #AAAAAA; width: 16%;">OK</div>
+            <div class="infopage" style="background: #FFAA00; color: #FFFF55; width: 16%;">DECENT</div>
+            <div class="infopage" style="background: #00AAAA; color: #55FFFF; width: 16%;">GOOD</div>
+            <div class="infopage" style="background: #AA0000; color: #FF5555; width: 16%;">LEGEND</div>
+            <div class="infopage" style="background: #AA00AA; color: #FF55FF; width: 16%;">GOD</div>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤Tags:</p>
+            <div class="infopage" style="color: #F3FF00; width: 16%; line-height: 23px; margin-left: 5px;">NICK - nicked player</div>
+            <div class="infopage" style="color: #FF5555; width: 16%; line-height: 23px;">SNPR - potential sniper</div>
+            <div class="infopage" style="color: #5555FF; width: 16%; line-height: 23px;">ALT - potential alt</div>
+            <div class="infopage" style="color: #FFB900; width: 20%; line-height: 23px;">PRTY - potentially in a party</div>
+            <div class="infopage" style="color: #03C800; width: 20%; line-height: 23px;">P - in your party (lobby only)</div>
+            <div class="infopage" style="color: #00C2A2; width: 16%; line-height: 23px;">CALL - typed your IGN in lobby</div>
+            <div class="infopage" style="color: #37B836; width: 20%; line-height: 23px;">PREQ - invited you to their party</div>
+            <div class="infopage" style="color: #D6D600; width: 20%; line-height: 23px;">FREQ - sent you a friend request</div>
+            <div class="infopage" style="color: #36C700; width: 20%; line-height: 23px;">GLD - player from your guild list</div>
+            <div class="infopage" style="color: #D071DA; width: 20%; line-height: 23px;"><img src="https://i2.wp.com/erisly.com/assets/img/premium/boost.def36ba.png" width="25" height="25"> - Discord server booster</div>
+            <div class="infopage" style="color: #00FF00; width: 20%; line-height: 23px;"><span style="font-size: 26px">✔</span> - verified (join Discord server)</div>
+            <div class="infopage" style="color: red; width: 20%; line-height: 23px;"><span style="font-size: 26px">❤</span> - donating (join Discord server)</div>
+            <p class="infopage" style="width: 100%; text-align: left; margin-left: 2px; margin-top: 25px; color: var(--primaryColor);">➤To hide/show: CTRL+SHIFT+A</p>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤How to use:</p>
+            <p class="infopage" style="width: 100%; font-size: 15px; margin-left: 2px; text-align: left;">✧Type "/who" in game lobby to get all players registered on overlay (might take a few secs). ✧Recommended: position overlay on top left or top right of screen and let the hands-free feature control overlay size (read more below)</p>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤Features:</p>
+            <p class="infopage" style="width: 100%; font-size: 15px; margin-left: 2px; text-align: left;">✧Resizable by dragging the edges. ✧Hands-free: automatically shrinks to just the title bar when game starts, automatically unshrinks when there is a player change in lobby, you can toggle this mode with the green arrow on the top right</p>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤Session stats:</p>
+            <p class="infopage" style="width: 100%; font-size: 15px; margin-left: 2px; text-align: left;">✧Click the clock button on the title bar to see your session stats, the changes in your stats since you opened the overlay. ✧Doing /api new will reset your session stats</p>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤Commands:</p>
+            <p class="infopage" style="width: 100%; font-size: 15px; margin-left: 2px; text-align: left;">✧"/w cl" will clear the players on the overlay. ✧"/w ![IGN]" will show you the stats of the [IGN] of the player your entered (example: "/w !OhChit")</p>
+            <p class="infopage" style="width: 100%; margin-left: 2px; margin-top: 20px; text-align: left; color: var(--primaryColor);">➤PS:</p>
+            <p class="infopage" style="width: 100%; font-size: 15px; margin-left: 2px; text-align: left;">✧This overlay is in an EARLY PHASE, so expect bugs. It was made by Chit (OhChit). It's my first time making an app so please don't expect much. Please join the Discord and message me with any bugs or suggestions!</p>
+        </div>
+
+        <div id="sessiondiv">
+            <img id="sessionavatar" style="position: absolute; right: 10px; margin-top: 10px; filter: drop-shadow(2px 2px rgb(0, 0, 0));">
+            <p id="sessiontitle" class="sessionpage" style="font-size: 20px; position: absolute; width: 100%; color: var(--primaryColor);">Session Stats Unavailable</p>
+            <p id="sessionign" class="sessionpage" style="font-size: 25px; margin-top: 40px; margin-left: 10px; text-align: left; display: block;">--</p>
+            <p id="sessionhtml" class="sessionpage" style="margin-top: 20px; margin-left: 10px; text-align: left;"><span style="color: red">ERROR LOADING STATS<br>CHECK YOUR API KEY</span></p>
+            <p id="sessiontime" class="sessionpage" style="right: 10px; bottom: 5px; position: absolute; font-size: 12px; text-align: right;">--</p>
+        </div>
+
+        <div id="musicdiv" style="filter: drop-shadow(2px 2px rgb(0, 0, 0));">
+            <p id="sessiontitle" class="rainbow" style="font-size: 22px; margin-top: 0; position: relative; text-align: center; width: 100%;">Overlay Music Party</p>
+            <p class="musicintro" style="text-align: center; font-size: 20px; color: rgb(174, 50, 205);"><b>Listen to music together with your party! They can all play songs and control the music vibe together</b></p>
+            <p class="musicintro" style="text-align: left; font-size: 17px; margin: 5px; color: #1d6cff;"><span style="font-size: 19; text-decoration: underline;"><b>Party chat usage commands:</b></span><br>• !play [song name] - Queue a song<br>• !remove [#] - Remove song # in queue<br>• !skip - Skips the current song<br>• !loop - Loop the queue<br>• !clear - Clear the entire queue</p>
+            <p class="musicintro" id="unlinked" style="text-align: left; font-size: 20px; margin: 5px; color: red; text-decoration: underline; display: none;"><b>ERROR: YOUR MC ACCOUNT IS NOT LINKED TO THE BOT IN THE DISCORD SERVER. Click the Discord button on the top to join the server and use the command ".link [IGN]"" in #bot-commands and try again</b></p>
+            <p class="musicintro" id="nomusicbots" style="text-align: left; font-size: 20px; margin: 5px; color: red; text-decoration: underline; display: none;"><b>ERROR: NO MUSIC BOTS AVAILABLE. All the music bots are currently being used currently. Try again later</b></p>
+            <div class="musicintro" style="text-align: center; margin-top: 15px; margin-bottom: 15px;"><button class="musicintro" id="startmusic">Start Music Party</button></div>
+            <p class="musicintro" style="text-align: left; font-size: 18px; margin: 5px; color: rgb(187, 9, 9);"><span style="text-decoration: underline;"><b>NOTE:</b></span> Your MC account must first be linked to the bot in the Abyss Overlay Discord server! Your private VC will be created in that server; you can join it and drag your party members in.</p>
+
+            <div class="musicplaying" style="width: 100%">
+                <button name="EndMusic" class="musicplaying" id="endmusic">End Session</button>
+                <p class="musicplaying" style="color: rgb(112, 112, 112); height: 14px; font-size: 14px; line-height: 14px; margin: 0 0 1px 10%;">NOW PLAYING</p>
+                <p class="musicplaying" id="songname" style="color: var(--primaryColor); height: 22px; width: 80%; font-size: 19px; line-height: 19px; margin: 0 0 1px 10%; white-space: nowrap; overflow: hidden;">//</p>
+                <div class="musicplaying" style="width: 90%; height: 10px; margin: 0 auto; overflow: visible; font-size: 0; margin-bottom: 5px;">
+                    <p id="currentsongtime" class="songtimer" style="text-align: right; direction: rtl;">0:00</p>
+                    <div style="display: inline-block; width: 89%; height: 10px; background-color: rgb(134, 134, 134); margin: 0 0.5% 0 0.5%; border-radius: 10px; overflow: hidden;"><div id="musicprogress"></div></div>
+                    <p id="fullsongtime" class="songtimer" style="text-align: left; direction: ltr;">0:00</p>
+                </div>
+                <button name="Loop" class="musicbutton musicplaying" id="loopmusic" style="background-image: url(../assets/m_loop.png); margin-left: 40%;"></button>
+                <button name="Play" class="musicbutton musicplaying" id="playmusic" style="background-image: url(../assets/m_play.png);"></button>
+                <button name="Next" class="musicbutton musicplaying" id="skipmusic" style="background-image: url(../assets/m_skip.png);"></button>
+    
+                <div class="musicplaying" style="height: 280px; width: 60%; border: solid rgba(136, 136, 136, 0.74); border-width: 1px; border-radius: 10px; background-color: rgba(2, 2, 2, 0.199); margin: auto; margin-bottom: 5px; overflow: hidden;">
+                    <p style="height: 10%; width: 100%; margin: 0; text-align: center; letter-spacing: 1px; background-color: rgba(145, 145, 145, 0.26); filter: drop-shadow(0);">QUEUE<span id="queuenum" style="height: 100%; width: 0%; overflow: visible; float: right; text-align: right; right: 2px; direction: rtl; font-size: 15px; vertical-align: middle; color: rgb(131, 131, 131);">0</span></p>
+                    <div style="height: 100%; overflow-x: hidden; overflow-y: auto;">
+                        <ul id="queuediv" style="width: 100%; margin: 0; padding: 0; list-style-type: none; font-family: Minecraftia; font-size: 0;">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="startup" style="color: var(--primaryColor)">SELECT YOUR CLIENT:</p>
+        <button class="clientbutton" id="badlion" style="margin-left: 2.5%;">Badlion</button>
+        <button class="clientbutton" id="lunar">Lunar 1.8</button>
+        <button class="clientbutton" id="vanilla">Vanilla/Forge</button>
+        <button class="clientbutton" id="pvplounge" style="margin-left: 12.5%;">PvP Lounge</button>
+        <button class="clientbutton" id="labymod" style="margin-left: 12.5%;">Laby Mod</button>
+        <!-- <p class="clientbutton updatenotif" style="color: red; display: none; width: 100%; word-wrap: break-word; white-space: normal; text-align: center;">THIS VERSION IS OUT OF DATE. UPDATE BY JOINING THE DISCORD OR CLICKING THE RED UPDATE BUTTON</p> -->
+        <!--<iframe src="https://discord.com/widget?id=822639649247592528&theme=dark" width="350" height="340" allowtransparency="true" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>-->
+        <div id="titles">
+            <p class="titleitems" style="width: 46.75%; padding-left: 2px;" id="playertitle">PLAYERS</p>
+            <p class="titleitems" style="width: 6%;">TAG</p>
+            <p class="titleitems" id="ws_nwl" style="width: 6.5%;">WS</p>
+            <p class="titleitems" id="kdr" style="width: 9.5%;">FKDR</p>
+            <p class="titleitems" style="width: 7%;">WLR</p>
+            <!--<p class="titleitems" style="width: 7.25%;">BBLR</p>-->
+            <p class="titleitems" id="kills" style="width: 11.25%;">FINALS</p>
+            <p class="titleitems" style="width: 9%;/*background-color: rgba(238, 130, 238, 0.644);*/">WINS</p>
+        </div>
+        <div id="indexdiv">
+            <ul class="indexes" id="ign" style="width: 46.75%; text-align: left; padding-left: 2px; list-style-type: none;"></ul>
+            <ul class="indexes" id="tag" style="width: 6%; overflow: visible;"></ul>
+            <ul class="indexes" id="ws" style="width: 6.5%;"></ul>
+            <ul class="indexes" id="fkdr" style="width: 9.5%;"></ul>
+            <ul class="indexes" id="wlr" style="width: 7%;"></ul>
+            <!--<ul class="indexes" id="bblr" style="width: 7.25%;"></ul>-->
+            <ul class="indexes" id="finals" style="width: 11.25%;"></ul>
+            <ul class="indexes" id="wins" style="width: 9%;"></ul>
+        </div>
+
+        <div id="changelog">
+            <p id="changelogVersion" style="width: 100%; height: 37px; margin: 0; padding: 0; background-color: rgb(75, 75, 75); text-align: center; font-size: 20px; color: var(--primaryColor);">Changelog</p>
+            <p id="changelogClose">×</p>
+            <p style="height: calc(100% - 37px); margin: 0; margin-left: 5px; padding: 0; overflow-y: auto; color: rgb(179, 179, 179);">
+                - <b>Added Discord Rich Presence.</b> Show off your game activity and stats in your Discord status! Works for BW, SW, and Duels and for overall and session stats. *make sure to open the overlay before MC*<br><br>
+                - <b>Added in-app changelog.</b> What you are looking at right now!<br><br>
+                - <b>Fixed freezing.</b> Fixed freezing on `/who`<br><br>
+                - <b>Fixed disappearing on taskbar.</b> Fixed overlay not going away from taskbar when closed<br><br>
+                - <b>Fixed showing 0 when no deaths/losses.</b> Fixed the glitch when FKDR, KDR, and WLR showed 0 when the denominator was 0
+            </p>
+        </div>
+    </div>
+</body>
+</html>
